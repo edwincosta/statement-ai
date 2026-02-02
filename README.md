@@ -46,7 +46,7 @@ A JSON object matching the schema in `app/schema.py`, for example:
       "date": "2025-01-15",
       "description": "Grocery Store",
       "amount": -54.23,
-      "currency": "USD",
+      "currency": "BRL",
       "category": "groceries",
       "source_page": 1
     }
@@ -57,10 +57,14 @@ A JSON object matching the schema in `app/schema.py`, for example:
 ## Errors
 - 401 if the `Authorization` header is missing or not `Bearer`
 - 502 if the OpenAI response cannot be parsed as JSON or extraction fails
+- 413 if the uploaded file exceeds the size limit (default 10 MB via `MAX_UPLOAD_BYTES`)
+- 429 if the upstream OpenAI key is rate-limited or out of quota
 
 ## Notes
 - Uploaded files are saved under `uploads/`; ensure you manage retention if needed.
 - The OpenAI key is taken from the request header, not the environment.
+- Uploads are deleted after processing. Override the size limit with `MAX_UPLOAD_BYTES` if needed.
+- Logs go to stdout/stderr. On Render, configure a log drain (Settings → Log streams) to forward to your sink.
 
 ## Deploy (Render free tier)
 1. Ensure the included `Dockerfile` is in the repo root (installs Tesseract, requirements, and runs uvicorn).

@@ -11,7 +11,7 @@ You must extract the bank/credit card statement into JSON:
       "date": "YYYY-MM-DD",
       "description": "string",
       "amount": "float (negative for debit, positive for credit)",
-      "currency": "string",
+      "currency": "string (BRL, USD, EUR, etc.)",
       "category": "string",
       "source_page": "int"
     }
