@@ -1,9 +1,9 @@
+import json
 from openai import OpenAI
 from .schema import statement_schema
 
-client = OpenAI()
 
-def extract_json(chunks: list[str]) -> dict:
+def extract_json(chunks: list[str], client: OpenAI) -> dict:
     content = "\n\n".join(chunks[:8])
 
     prompt = f"""
@@ -20,4 +20,5 @@ Extract the data from this statement text:
         response_format={"type": "json_object"},
     )
 
-    return response.choices[0].message.content
+    message_content = response.choices[0].message.content
+    return json.loads(message_content)
